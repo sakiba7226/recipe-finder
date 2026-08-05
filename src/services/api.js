@@ -14,3 +14,16 @@ export const searchRecipes = async (ingredient) => {
         return [];
     }
 };
+
+export const getRecipeDetails = async (id) => {
+    try {
+        const response = await axios.get(
+            `${BASE_URL}/lookup.php?i=${id}`
+        );
+
+        return response.data.meals[0];
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
