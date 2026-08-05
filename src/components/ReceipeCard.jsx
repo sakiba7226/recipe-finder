@@ -2,8 +2,17 @@ import React from 'react'
 
 import { Heart, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useFavorite } from '../context/FavoritesContext';
+
+
 
 const RecipeCard = ({ recipe }) => {
+
+    const { addFavorite, removeFavorite, isFavorite } =
+        useFavorite();
+
+    const favorite = isFavorite(recipe.idMeal);
+
     return (
         <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
             {/* Image */}
@@ -21,9 +30,22 @@ const RecipeCard = ({ recipe }) => {
 
                 <div className="flex justify-between items-center mt-5">
                     {/* Favorite Button */}
-                    <button className="flex items-center gap-2 text-red-500 hover:text-red-600 transition">
-                        <Heart size={20} />
-                        Favorite
+                    <button
+                        onClick={() =>
+                            favorite
+                                ? removeFavorite(recipe.idMeal)
+                                : addFavorite(recipe)
+                        }
+                        className={`flex items-center gap-2 transition ${favorite
+                            ? "text-red-500"
+                            : "text-gray-500 hover:text-red-500"
+                            }`}
+                    >
+                        <Heart
+                            size={20}
+                            fill={favorite ? "currentColor" : "none"}
+                        />
+                        {favorite ? "Saved" : "Favorite"}
                     </button>
 
                     {/* Details Button */}
