@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 
 import { searchRecipes } from "../services/api";
+import RecipeCard from '../components/ReceipeCard';
 
 const Home = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -25,7 +26,7 @@ const Home = () => {
 
             <div className="max-w-7xl mx-auto px-5 mt-10">
                 <h1 className="text-4xl font-bold">
-                    Find Delicious Recipes 🍽️
+                    Find Delicious Recipes
                 </h1>
 
                 <p className="text-gray-500 mt-2">
@@ -39,8 +40,8 @@ const Home = () => {
                 />
 
 
-                <div className="mt-8">
-                    <h2 className="text-2xl font-semibold mb-4">
+                <div className="mt-10">
+                    <h2 className="text-2xl font-bold mb-6">
                         Search Results
                     </h2>
 
@@ -49,14 +50,14 @@ const Home = () => {
                             No recipes found.
                         </p>
                     ) : (
-                        recipes.map((recipe) => (
-                            <div
-                                key={recipe.idMeal}
-                                className="border p-4 rounded-lg mb-3"
-                            >
-                                {recipe.strMeal}
-                            </div>
-                        ))
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {recipes.map((recipe) => (
+                                <RecipeCard
+                                    key={recipe.idMeal}
+                                    recipe={recipe}
+                                />
+                            ))}
+                        </div>
                     )}
                 </div>
             </div>
