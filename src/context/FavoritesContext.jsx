@@ -1,9 +1,22 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const FavoriteContext = createContext();
 
 export const FavoriteProvider = ({ children }) => {
-    const [favorites, setFavorites] = useState([]);
+    const [favorites, setFavorites] = useState(() => {
+        const storedFavorites = localStorage.getItem("favorites");
+
+        return storedFavorites
+            ? JSON.parse(storedFavorites)
+            : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem(
+            "favorites",
+            JSON.stringify(favorites)
+        );
+    }, [favorites]);
 
     const addFavorite = (recipe) => {
         const exists = favorites.some(
